@@ -20,4 +20,12 @@ public class Pos {
         this.shipIndex = -1;
     }
 
+    public Ship getShip() {
+        return ship;
+    }
+
+    public int getShipSection() {
+        return shipIndex;
+    }
+
 }

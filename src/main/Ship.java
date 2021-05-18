@@ -13,4 +13,8 @@ public class Ship {
             nodes[i] = false;
         }
     }
+
+    public boolean isSunk() {
+        return nodesLeft <= 0;
+    }
 }
