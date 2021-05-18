@@ -1,7 +1,5 @@
 package src.main;
 
-import javax.swing.text.Position;
-
 public class Board {
 
     private static int DEFAULT_SIZE = 10;
@@ -21,5 +19,15 @@ public class Board {
             }
         }
     }   
+
+    /** 
+     *
+     */
+    public static int[] convertToCords(String command) {
+        int[] returnVal = new int[2];
+        returnVal[1] = (int) command.charAt(0) - 97;
+        returnVal[0] = Integer.parseInt(command.substring(1).toUpperCase()) - 1;
+        return returnVal;
+    }
 
 }
