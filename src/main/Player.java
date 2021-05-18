@@ -6,8 +6,21 @@ public abstract class Player {
     private Ship[] ships;
 
     public HitResult hit(int x, int y) {
-        // This should be the same for any player type. Just makes a hit and return info from the position
-        return null;
+        Pos hitElement = board.get(x, y);
+        Ship ship = hitElement.getShip();
+        int result = 0;
+        if (ship != null) {
+            result++;
+            if (ship.isSunk()) {
+                result++;
+            }
+        }
+        return new HitResult(ship, result);
+    }
+
+    public HitResult hit(String command) { 
+        int[] positions = Board.convertToCords(command);
+        return hit(positions[0], positions[1]);
     }
 
     public Ship[] getShips() {
