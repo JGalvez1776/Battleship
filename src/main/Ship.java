@@ -8,7 +8,7 @@ public class Ship {
 
     public Ship(int size) {
         nodes = new boolean[size];
-        int nodesLeft = size;
+        nodesLeft = size;
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = false;
         }
