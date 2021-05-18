@@ -33,7 +33,7 @@ public class Board {
     /** 
      *
      */
-    private static int[] convertToCords(String command) {
+    public static int[] convertToCords(String command) {
         int[] returnVal = new int[2];
         returnVal[1] = (int) command.charAt(0) - 97;
         returnVal[0] = Integer.parseInt(command.substring(1).toUpperCase()) - 1;
