@@ -1,5 +1,6 @@
 package src.main;
 
+
 public class Board {
 
     private static int DEFAULT_SIZE = 10;
@@ -20,10 +21,19 @@ public class Board {
         }
     }   
 
+    public Pos get(int x, int y) {
+        return board[y][x];
+    }
+
+    public Pos get(String command) {
+        int[] positions = Board.convertToCords(command);
+        return get(positions[0], positions[1]);
+    }
+
     /** 
      *
      */
-    public static int[] convertToCords(String command) {
+    private static int[] convertToCords(String command) {
         int[] returnVal = new int[2];
         returnVal[1] = (int) command.charAt(0) - 97;
         returnVal[0] = Integer.parseInt(command.substring(1).toUpperCase()) - 1;
