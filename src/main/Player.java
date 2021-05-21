@@ -4,6 +4,29 @@ package src.main;
 public abstract class Player {
     private Board board;
     private Ship[] ships;
+    private String playerName;
+
+    // TODO: Use hits left to keep track of when a player wins.
+    private int hitsLeft;
+
+    public Player(String name) {
+        this(name, Board.DEFAULT_SIZE);
+    }
+
+    public Player(String name, int boardSize) {
+        this(name, boardSize, Battleship.defaultShips());
+    }
+
+    public Player(String name, int boardSize, Ship[] ships) {
+        board = new Board(boardSize);
+        this.ships = ships;
+        hitsLeft = 0;
+        for (Ship ship : ships) {
+            if (ship != null) {
+                hitsLeft = hitsLeft + ship.getSize();
+            }
+        }
+    }
 
     public HitResult hit(int x, int y) {
         Pos hitElement = board.get(x, y);
@@ -28,6 +51,10 @@ public abstract class Player {
     }
 
     public abstract void move();
+
+    public boolean stillAlive() {
+        return hitsLeft > 0;
+    }
 
 
     public class HitResult {
