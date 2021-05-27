@@ -3,7 +3,7 @@ package src.main;
 
 public class Board {
 
-    private static int DEFAULT_SIZE = 10;
+    public static final int DEFAULT_SIZE = 10;
     private int size;
     private Pos[][] board;
 

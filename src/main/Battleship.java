@@ -3,19 +3,35 @@ package src.main;
 public class Battleship { 
 
     public static void main(String[] args) {
-        
+        Player[] players;
         if (args.length == 0) {
-            startDefaultGame();
+            players = new Player[2];
+            players[0] = new RandomPlayer("Player 1");
+            players[1] = new RandomPlayer("Player 2");
+        } else {
+            return;
+        }
+
+        for (Player player : players) {
+            player.initializeBoard();
+            
+        }
+
+        int currentPlayerIndex = 0;
+        boolean gameStatus = true;
+        Player currentPlayer;
+        Player nextPlayer;
+
+        while (gameStatus) {
+            currentPlayer = players[currentPlayerIndex];
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            nextPlayer = players[currentPlayerIndex];
+            currentPlayer.move(nextPlayer);
+            gameStatus = currentPlayer.stillAlive();
+            
         }
     }
 
-    private static void startDefaultGame() {
-        
-    }   
-
-    private static void startGame(Player[] players) {
-
-    }
 
     public static Ship[] defaultShips() {
         Ship[] ships = new Ship[5];

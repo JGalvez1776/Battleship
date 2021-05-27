@@ -17,4 +17,8 @@ public class Ship {
     public boolean isSunk() {
         return nodesLeft <= 0;
     }
+
+    public int getSize() {
+        return nodes.length;
+    }
 }
