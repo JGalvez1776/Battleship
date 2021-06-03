@@ -4,15 +4,14 @@ package src.main;
 public class Board {
 
     public static final int DEFAULT_SIZE = 10;
-    private int size;
     private Pos[][] board;
 
     public Board() {
         this(Board.DEFAULT_SIZE);
     }
 
+    // TODO: Should add another constructor for making boards that are not squares.
     public Board(int size) {
-        this.size = size;
         this.board = new Pos[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -28,6 +27,14 @@ public class Board {
     public Pos get(String command) {
         int[] positions = Board.convertToCords(command);
         return get(positions[0], positions[1]);
+    }
+
+    public int getWidth() {
+        return board[0].length;
+    }
+
+    public int getHeight() {
+        return board.length;
     }
 
     /** 

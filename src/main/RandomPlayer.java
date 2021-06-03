@@ -1,4 +1,5 @@
 package src.main;
+import java.util.Random;
 
 public class RandomPlayer extends Player {
 
