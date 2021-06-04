@@ -2,8 +2,8 @@ package src.main;
 
 
 public abstract class Player {
-    private Board board;
-    private Ship[] ships;
+    protected Board board;
+    protected Ship[] ships;
     private String playerName;
 
     // This is to be used to track locations that are hit
@@ -12,7 +12,8 @@ public abstract class Player {
     // TODO: Use hits left to keep track of when a player wins.
     private int hitsLeft;
 
-    /* Overrides of move must:
+    /**
+     * Overrides of move must:
      *      Call hit on a location in PlayerToHit 
      *      Record the result on LocationHit with the result
      */ 
@@ -91,7 +92,6 @@ public abstract class Player {
         int[] positions = Board.convertToCords(command);
         return hit(positions[0], positions[1]);
     }
-    
 
     public class HitResult {
         private int result;

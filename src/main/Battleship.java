@@ -17,8 +17,11 @@ public class Battleship {
             
         }
 
+        
+
         int currentPlayerIndex = 0;
-        boolean gameStatus = true;
+        // TODO: Have it here as false so the game does not run
+        boolean gameStatus = false;
         Player currentPlayer;
         Player nextPlayer;
 

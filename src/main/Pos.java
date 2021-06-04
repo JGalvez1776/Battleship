@@ -28,4 +28,8 @@ public class Pos {
         return shipIndex;
     }
 
+    public String toString() {
+        return "X";
+    }
+
 }

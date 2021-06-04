@@ -15,10 +15,14 @@ public class Board {
         this.board = new Pos[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                board[i][j] = new Pos();
+                board[i][j] = null;
             }
         }
     }   
+
+    public void place(int x, int y, Pos pos) {
+        board[y][x] = pos;
+    }
 
     public Pos get(int x, int y) {
         return board[y][x];
