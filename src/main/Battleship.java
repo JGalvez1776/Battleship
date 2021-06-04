@@ -17,22 +17,23 @@ public class Battleship {
             
         }
 
-        
-
         int currentPlayerIndex = 0;
         // TODO: Have it here as false so the game does not run
-        boolean gameStatus = false;
+        boolean gameStatus = true;
         Player currentPlayer;
         Player nextPlayer;
-
+        int turnCount = 0;
         while (gameStatus) {
             currentPlayer = players[currentPlayerIndex];
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
             nextPlayer = players[currentPlayerIndex];
             currentPlayer.move(nextPlayer);
-            gameStatus = currentPlayer.stillAlive();
-            
+            gameStatus = currentPlayer.stillAlive(); 
+            turnCount++;           
         }
+        // TODO: Make this message cleaner (Say player who won turns etc)
+        System.out.println("Game over after " + (turnCount) + " turns.");
+        System.out.println(turnCount / 2);
     }
 
 

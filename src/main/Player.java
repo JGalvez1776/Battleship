@@ -4,10 +4,10 @@ package src.main;
 public abstract class Player {
     protected Board board;
     protected Ship[] ships;
-    private String playerName;
+    protected String playerName;
 
     // This is to be used to track locations that are hit
-    private int[][] locationsHit;
+    protected int[][] locationsHit;
 
     // TODO: Use hits left to keep track of when a player wins.
     private int hitsLeft;
@@ -20,6 +20,23 @@ public abstract class Player {
     public abstract void move(Player playerToHit);
     public abstract void initializeBoard();
 
+    // TODO: Remove this its for debugging
+    protected void print() {
+        for (int y = 0; y < locationsHit[0].length; y++) {
+            for (int x = 0; x < locationsHit.length; x++) {
+                int val = locationsHit[y][x];
+                if (val == 1) {
+                    System.out.print("[*]");
+                } else {
+                    System.out.print("[ ]");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+
     public Player(String name) {
         this(name, Board.DEFAULT_SIZE);
     }
@@ -30,6 +47,7 @@ public abstract class Player {
 
     // TODO: Again if I make boards not squares add another constructor
     public Player(String name, int boardSize, Ship[] ships) {
+        this.playerName = name;
         board = new Board(boardSize);
         this.ships = ships;
         hitsLeft = 0;
@@ -53,6 +71,10 @@ public abstract class Player {
         return ships;
     }
 
+    public String getName() {
+        return playerName;
+    }
+
     public int getHitStatus(int x, int y) {
         return locationsHit[y][x];
     }
@@ -74,9 +96,15 @@ public abstract class Player {
 
     /* Returns a HitResult object which provides an int that describes the behavior of a hit 
      * also returns the ship hit if it exists
+     * 
+     * NOTE: This also assumes that x and y has not been hit. This validation must be made by the player
+     * TODO: Probably fix this to make implementing new players easier.
      */
     public HitResult hit(int x, int y) {
         Pos hitElement = board.get(x, y);
+        if (hitElement == null) {
+            return new HitResult(null, 0);
+        }
         Ship ship = hitElement.getShip();
         int result = 0;
         if (ship != null) {
@@ -84,6 +112,8 @@ public abstract class Player {
             if (ship.isSunk()) {
                 result++;
             }
+            hitsLeft--;
+            ship.hit(hitElement.getShipSection());
         }
         return new HitResult(ship, result);
     }
@@ -94,6 +124,12 @@ public abstract class Player {
     }
 
     public class HitResult {
+        /* 
+         * result:
+         * 0: Miss
+         * 1: Hit
+         * 2: Hit and sink
+         */
         private int result;
         private Ship ship;
 

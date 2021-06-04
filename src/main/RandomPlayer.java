@@ -18,17 +18,36 @@ public class RandomPlayer extends Player {
 
     @Override
     public void move(Player playerToHit) {
-        // TODO Auto-generated method stub
+        int x = 0;
+        int y = 0;
+        boolean hitCompleted = false;
+
+        while (!hitCompleted) { 
+            x = random.nextInt(super.getBoardWidth());
+            y = random.nextInt(super.getBoardHeight());
+            if (locationsHit[y][x] == -1) { 
+                HitResult result = playerToHit.hit(x, y);
+                locationsHit[y][x] = result.getResult(); 
+                if (result.getResult() == 2) {
+                    // TODO: Does not seem to be getting triggered
+                    System.out.println("Sunk a ship");
+                }
+                hitCompleted = true;
+            }   
+        }
+
+        System.out.println(super.getName() + " x = " + x + " y = " + y);
+
+
+        
     }
 
     @Override
     public void initializeBoard() {
-        // TODO Auto-generated method stub
         for (Ship ship : ships) {
             boolean placed = false;
 
             while (!placed) {
-                System.out.println("Here");
                 int x = random.nextInt(super.getBoardWidth());
                 int y = random.nextInt(super.getBoardHeight());
                 int direction = random.nextInt(4);
@@ -47,7 +66,9 @@ public class RandomPlayer extends Player {
             }
             System.out.println();
         }
+        System.out.println();
     }
+
     
     private boolean place(int x, int y, int direction, Ship ship) {
         int curX = x;

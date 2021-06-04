@@ -14,6 +14,10 @@ public class Ship {
         }
     }
 
+    public void hit(int index) {
+        nodesLeft--;
+    }
+
     public boolean isSunk() {
         return nodesLeft <= 0;
     }
