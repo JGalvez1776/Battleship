@@ -17,8 +17,8 @@ public class Battleship {
         }
 
         for (Player player : players) {
-            player.initializeBoard();
-            
+            player.initializeBoard(); 
+            player.printSolution();
         }
 
         int currentPlayerIndex = 0;
@@ -43,11 +43,11 @@ public class Battleship {
 
     public static Ship[] defaultShips() {
         Ship[] ships = new Ship[5];
-        ships[0] = new Ship(2);
-        ships[1] = new Ship(3);
-        ships[2] = new Ship(3);
-        ships[3] = new Ship(4);
-        ships[4] = new Ship(5);
+        ships[0] = new Ship(2, "Destroyer");
+        ships[1] = new Ship(3, "Submarine");
+        ships[2] = new Ship(3, "Cruiser");
+        ships[3] = new Ship(4, "Battleship");
+        ships[4] = new Ship(5, "Carrier");
         return ships;
     }
 

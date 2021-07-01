@@ -36,19 +36,6 @@ public class RandomPlayer extends Player {
                 placed = place(x, y, direction, ship);
             }
         }
-
-        for (int y = 0; y < super.getBoardHeight(); y++) {
-            for (int x = 0; x < super.getBoardWidth(); x++) {
-                Pos pos = board.get(x, y);
-                if (pos == null) {
-                    System.out.print("[ ]");
-                } else {
-                    System.out.print("[X]");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
     

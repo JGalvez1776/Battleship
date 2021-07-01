@@ -44,10 +44,29 @@ public abstract class Player {
 
         int x = move[0];
         int y = move[1];
+        
         HitResult result = playerToHit.hit(x, y);
         locationsHit[y][x] = result.getResult(); 
-        System.out.println("DONE: " + x + " " + y);
+
+        // TODO: Make this toggleable?
+        printResult(result, x, y);
+        printPlayerView();
         return result;
+    }
+
+    // TODO: This is for debugging
+    public void printResult(HitResult result, int x, int y) {
+        
+        System.out.print(playerName + " Shot at: x: " + x + " y: " + y + " ");
+
+        if (result.getResult() > 0) {
+            System.out.print("Hit: " + result.getShip() + " ");
+        }
+        if (result.getResult() > 1) {
+            System.out.print("SUNK");
+        }
+
+        System.out.println();
     }
 
     public void initializeBoard() {
@@ -62,7 +81,10 @@ public abstract class Player {
                 placed = place(x, y, direction, ship);
             }
         }
+    }
 
+    // TODO: Remove this its for debugging
+    public void printSolution() {
         for (int y = 0; y < getBoardHeight(); y++) {
             for (int x = 0; x < getBoardWidth(); x++) {
                 Pos pos = board.get(x, y);
@@ -77,14 +99,18 @@ public abstract class Player {
         System.out.println();
     }
 
+
+
     // TODO: Remove this its for debugging
-    protected void print() {
+    public void printPlayerView() {
         for (int y = 0; y < locationsHit[0].length; y++) {
             for (int x = 0; x < locationsHit.length; x++) {
                 int val = locationsHit[y][x];
-                if (val == 1) {
+                if (val >= 1) {
+                    System.out.print("[X]");
+                } else if (val == 0) {
                     System.out.print("[*]");
-                } else {
+                }else {
                     System.out.print("[ ]");
                 }
             }
@@ -166,11 +192,12 @@ public abstract class Player {
         int result = 0;
         if (ship != null) {
             result++;
+            hitsLeft--;
+            
+            ship.hit(hitElement.getShipSection());
             if (ship.isSunk()) {
                 result++;
             }
-            hitsLeft--;
-            ship.hit(hitElement.getShipSection());
         }
         return new HitResult(ship, result);
     }

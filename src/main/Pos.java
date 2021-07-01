@@ -13,7 +13,7 @@ public class Pos {
     }
 
     /**
-     * This constructor initializes an empty posiiton (Has no ship).
+     * This constructor initializes an empty positon (Has no ship).
      */
     public Pos() {
         this.ship = null;
