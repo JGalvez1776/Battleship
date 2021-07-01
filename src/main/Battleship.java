@@ -1,5 +1,9 @@
 package src.main;
 
+
+// TODO: Make a random class object in the battleship class that everything in the package can use
+// Can also make some methods instead to just get random integers between two bounds
+
 public class Battleship { 
 
     public static void main(String[] args) {

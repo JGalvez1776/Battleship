@@ -2,7 +2,8 @@ package src.main;
 import java.util.Random;
 
 public class RandomPlayer extends Player {
-    private static Random random = new Random();;
+
+    public static Random random = new Random();
 
     public RandomPlayer(String name) {
         super(name);
@@ -17,30 +18,11 @@ public class RandomPlayer extends Player {
     }
 
     @Override
-    public void move(Player playerToHit) {
-        int x = 0;
-        int y = 0;
-        boolean hitCompleted = false;
-
-        while (!hitCompleted) { 
-            x = random.nextInt(super.getBoardWidth());
-            y = random.nextInt(super.getBoardHeight());
-            if (locationsHit[y][x] == -1) { 
-                HitResult result = playerToHit.hit(x, y);
-                locationsHit[y][x] = result.getResult(); 
-                if (result.getResult() == 2) {
-                    // TODO: Does not seem to be getting triggered
-                    System.out.println("Sunk a ship");
-                }
-                hitCompleted = true;
-            }   
-        }
-
-        System.out.println(super.getName() + " x = " + x + " y = " + y);
-
-
-        
+    public void updateMove(Player playerToHit, int[] move) {
+        move[0] = random.nextInt(super.getBoardWidth());
+        move[1] = random.nextInt(super.getBoardHeight());
     }
+
 
     @Override
     public void initializeBoard() {
@@ -70,7 +52,7 @@ public class RandomPlayer extends Player {
     }
 
     
-    private boolean place(int x, int y, int direction, Ship ship) {
+    public boolean place(int x, int y, int direction, Ship ship) {
         int curX = x;
         int curY = y;
         int xItteration = 0;
@@ -104,5 +86,7 @@ public class RandomPlayer extends Player {
         }
         return true;
     }
+
+    
 
 }

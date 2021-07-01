@@ -1,4 +1,5 @@
 package src.main;
+import java.util.Random;
 
 
 public abstract class Player {
@@ -17,8 +18,64 @@ public abstract class Player {
      *      Call hit on a location in PlayerToHit 
      *      Record the result on LocationHit with the result
      */ 
-    public abstract void move(Player playerToHit);
-    public abstract void initializeBoard();
+    //public abstract void move(Player playerToHit);
+    public abstract boolean place(int x, int y, int direction, Ship ship);
+
+    public abstract void updateMove(Player playerToHit, int[] move); 
+
+    public boolean validateMove(int[] move) {
+        int x = move[0];
+        int y = move[1];
+
+        return x >= 0 && x < getBoardWidth() && 
+               y >= 0 && y < getBoardHeight() && 
+               locationsHit[y][x] == -1;
+    }
+
+
+    public HitResult move(Player playerToHit) {
+        int[] move = new int[2];
+        boolean moveValidated = false;
+
+        while (!moveValidated) { 
+            updateMove(playerToHit, move);
+            moveValidated = validateMove(move);
+        }
+
+        int x = move[0];
+        int y = move[1];
+        HitResult result = playerToHit.hit(x, y);
+        locationsHit[y][x] = result.getResult(); 
+        System.out.println("DONE: " + x + " " + y);
+        return result;
+    }
+
+    public void initializeBoard() {
+        Random random = new Random();
+        for (Ship ship : ships) {
+            boolean placed = false;
+
+            while (!placed) {
+                int x = random.nextInt(getBoardWidth());
+                int y = random.nextInt(getBoardHeight());
+                int direction = random.nextInt(4);
+                placed = place(x, y, direction, ship);
+            }
+        }
+
+        for (int y = 0; y < getBoardHeight(); y++) {
+            for (int x = 0; x < getBoardWidth(); x++) {
+                Pos pos = board.get(x, y);
+                if (pos == null) {
+                    System.out.print("[ ]");
+                } else {
+                    System.out.print("[X]");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 
     // TODO: Remove this its for debugging
     protected void print() {
