@@ -12,10 +12,18 @@ public class Battleship {
             players = new Player[2];
             players[0] = new RandomPlayer("Player 1");
             players[1] = new RandomPlayer("Player 2");
+            defaultGame(players);
+        } else if (args[0].equals("Random")) {
+            singlePlayerGame(new RandomPlayer("Player"), new RandomPlayer("Training Dummy"));
         } else {
             return;
         }
+        
+       
+    }
 
+
+    private static void defaultGame(Player[] players) {
         for (Player player : players) {
             player.initializeBoard(); 
             player.printSolution();
@@ -32,14 +40,28 @@ public class Battleship {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
             nextPlayer = players[currentPlayerIndex];
             currentPlayer.move(nextPlayer);
-            gameStatus = currentPlayer.stillAlive(); 
+            gameStatus = nextPlayer.stillAlive(); 
             turnCount++;           
+            // NOTE: This does not handle ties 
         }
         // TODO: Make this message cleaner (Say player who won turns etc)
-        System.out.println("Game over after " + (turnCount) + " turns.");
+        System.out.println("Game over after " + (turnCount) + " rounds.");
         System.out.println(turnCount / 2);
     }
 
+    private static void singlePlayerGame(Player player, Player opponent) {
+        opponent.initializeBoard();
+        int turnCount = 1;
+        boolean gameStatus = true;
+
+        while (gameStatus) {
+            System.out.println("Turn " + turnCount);
+            player.move(opponent);
+            gameStatus = opponent.stillAlive();
+            turnCount++;
+        }
+        System.out.println("Game over after " + (turnCount - 1) + " turns.");
+    }
 
     public static Ship[] defaultShips() {
         Ship[] ships = new Ship[5];

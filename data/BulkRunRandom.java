@@ -21,7 +21,8 @@ public class BulkRunRandom {
         System.setOut(stream);
 
         for (int i = 0; i < 1; i++) {
-            Battleship.main(new String[0]);
+            //Battleship.main(new String[0]);
+            Battleship.main(new String[]{"Random"});
         }   
     }
 

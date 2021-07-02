@@ -6,22 +6,66 @@ public abstract class Player {
     protected Board board;
     protected Ship[] ships;
     protected String playerName;
-
     // This is to be used to track locations that are hit
     protected int[][] locationsHit;
-
     // TODO: Use hits left to keep track of when a player wins.
     private int hitsLeft;
 
-    /**
-     * Overrides of move must:
-     *      Call hit on a location in PlayerToHit 
-     *      Record the result on LocationHit with the result
-     */ 
-    //public abstract void move(Player playerToHit);
-    public abstract boolean place(int x, int y, int direction, Ship ship);
-
+    // TODO: Update comment to reflect what overrides of this need to do
     public abstract void updateMove(Player playerToHit, int[] move); 
+
+    private boolean place(int x, int y, int direction, Ship ship) {
+        int curX = x;
+        int curY = y;
+        int xItteration = 0;
+        int yItteration = 0;
+
+        if (direction == 0) {
+            yItteration = 1;
+        } else if (direction == 1) {
+            xItteration = 1;
+        } else if (direction == 2) {
+            yItteration = -1;
+        } else if (direction == 3) {
+            xItteration = -1;
+        } else {
+            System.out.println("Invalid direction inputted");
+        }
+
+        for (int i = 0; i < ship.getSize(); i++) {
+            if (curX < 0 || curY < 0 ||curX >= this.getBoardWidth() || 
+                curY >= this.getBoardHeight() || board.get(curX, curY) != null) {
+                return false;
+            }
+            curX = curX + xItteration;
+            curY = curY + yItteration;
+        }
+
+        for (int i = 0; i < ship.getSize(); i++) {
+            board.place(x, y, new Pos(ship, i));
+            x = x + xItteration;
+            y = y + yItteration;
+        }
+        return true;
+    }
+
+    
+
+    
+    // NOTE: For HumanPlayer override this
+    public void initializeBoard() {
+        Random random = new Random();
+        for (Ship ship : ships) {
+            boolean placed = false;
+
+            while (!placed) {
+                int x = random.nextInt(getBoardWidth());
+                int y = random.nextInt(getBoardHeight());
+                int direction = random.nextInt(4);
+                placed = place(x, y, direction, ship);
+            }
+        }
+    }
 
     public boolean validateMove(int[] move) {
         int x = move[0];
@@ -69,19 +113,7 @@ public abstract class Player {
         System.out.println();
     }
 
-    public void initializeBoard() {
-        Random random = new Random();
-        for (Ship ship : ships) {
-            boolean placed = false;
 
-            while (!placed) {
-                int x = random.nextInt(getBoardWidth());
-                int y = random.nextInt(getBoardHeight());
-                int direction = random.nextInt(4);
-                placed = place(x, y, direction, ship);
-            }
-        }
-    }
 
     // TODO: Remove this its for debugging
     public void printSolution() {
