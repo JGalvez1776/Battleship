@@ -78,7 +78,7 @@ public abstract class Player {
 
 
     public HitResult move(Player playerToHit) {
-        int[] move = new int[2];
+        int[] move = new int[]{-1, -1};
         boolean moveValidated = false;
 
         while (!moveValidated) { 

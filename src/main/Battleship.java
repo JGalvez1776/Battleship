@@ -13,24 +13,30 @@ public class Battleship {
             players[0] = new RandomPlayer("Player 1");
             players[1] = new RandomPlayer("Player 2");
             defaultGame(players);
-        } else if (args[0].equals("Random")) {
-            singlePlayerGame(new RandomPlayer("Player"), new RandomPlayer("Training Dummy"));
+        } else if (args.length == 2) {
+            players = new Player[2];
+            players[0] = createPlayer(args[0], 1);
+            players[1] = createPlayer(args[1], 2);
+            if (players[0] == null || players[1] == null) {
+                System.out.println("ERROR: Invalid Player type passed as parameters (\"AI\", \"Random\", \"Human\")");
+                return;
+            }
+            defaultGame(players);
+        
         } else {
+            System.out.println("ERROR: Unknown parameters");
             return;
         }
-        
-       
     }
-
 
     private static void defaultGame(Player[] players) {
         for (Player player : players) {
             player.initializeBoard(); 
+            // TODO: Remove printing the solution lmao
             player.printSolution();
         }
 
         int currentPlayerIndex = 0;
-        // TODO: Have it here as false so the game does not run
         boolean gameStatus = true;
         Player currentPlayer;
         Player nextPlayer;
@@ -47,6 +53,18 @@ public class Battleship {
         // TODO: Make this message cleaner (Say player who won turns etc)
         System.out.println("Game over after " + (turnCount) + " rounds.");
         System.out.println(turnCount / 2);
+    }
+
+    private static Player createPlayer(String player, int id) {
+        player = player.toUpperCase();
+        if (player.equals("AI")) {
+            return new AIPlayer("AI " + id);
+        } else if (player.equals("HUMAN")) {
+            return new HumanPlayer("Player " + id);
+        } else if (player.equals("RANDOM")) {
+            return new RandomPlayer("Random Player " + id);
+        }
+        return null;
     }
 
     private static void singlePlayerGame(Player player, Player opponent) {

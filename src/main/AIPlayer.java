@@ -15,15 +15,15 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public void initializeBoard() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public void updateMove(Player playerToHit, int[] move) {
-        // TODO Auto-generated method stub
-        
+        // TODO: Have the calculations here
+        //for (int[] row : locationsHit) {
+        //    System.out.println(Arrays.toString(row));
+        //}
+
+        // TODO: Have this do stuff
+        move[0] = 0;
+        move[1] = 0;
     }
 
 
