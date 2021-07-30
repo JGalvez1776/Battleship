@@ -1,6 +1,13 @@
 package src.main;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class AIPlayer extends Player {
+    private List<Ship> enemyShips;
+    private int boardSize;
+    private AIView frequenyGrid;
+
 
     public AIPlayer(String name) {
         super(name);
@@ -12,6 +19,12 @@ public class AIPlayer extends Player {
 
     public AIPlayer(String name, int boardSize, Ship[] ships) {
         super(name, boardSize, ships);
+        this.boardSize = boardSize;
+        enemyShips = new LinkedList<Ship>();
+        for (Ship ship : ships) {
+            enemyShips.add(ship);
+        }
+
     }
 
     @Override
@@ -25,6 +38,13 @@ public class AIPlayer extends Player {
         move[0] = 0;
         move[1] = 0;
     }
+
+    @Override
+    public void moveAftermath(HitResult result) {
+
+    }
+
+    
 
 
 }

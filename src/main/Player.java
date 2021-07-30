@@ -92,11 +92,16 @@ public abstract class Player {
         HitResult result = playerToHit.hit(x, y);
         locationsHit[y][x] = result.getResult(); 
 
+        moveAftermath(result);
+
         // TODO: Make this toggleable?
         printResult(result, x, y);
         printPlayerView();
         return result;
     }
+
+    // This is to be used by the AI only
+    public void moveAftermath(HitResult result) {};
 
     // TODO: This is for debugging
     public void printResult(HitResult result, int x, int y) {
